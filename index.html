@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Economic Structure of Wanegaon | Parth Rait Research</title>
+    
+    <!-- TAILWIND CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- CHART.JS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@2.1.0"></script>
+
+    <!-- MATHJAX -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <!-- FONTS -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+    <!-- AGRARIAN PALETTE -->
+    <style>
+        :root {
+            --earth-dark: #3E2723;    /* Deep Soil */
+            --earth-mid: #5D4037;     /* Tilled Earth */
+            --clay: #8D6E63;          /* Terracotta */
+            --maize: #F9A825;         /* Golden Crop */
+            --sage: #558B2F;          /* Foliage */
+            --parchment: #F5F5DC;     /* Old Paper */
+            --stone: #EFEBE9;         /* Light Stone */
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            background-color: var(--parchment);
+            color: var(--earth-dark);
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%238d6e63' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+
+        h1, h2, h3, h4, .nav-logo {
+            font-family: 'Cinzel', serif;
+        }
+
+        /* Distinct Card Style */
+        .card-agrarian {
+            background-color: #FFF8E7; /* Light cream */
+            border: 2px solid var(--clay);
+            border-radius: 4px;
+            box-shadow: 6px 6px 0px var(--earth-dark);
+            transition: all 0.3s ease;
+        }
+        .card-agrarian:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 8px 8px 0px var(--earth-mid);
+        }
+
+        /* Buttons */
+        .btn-earth {
+            background-color: var(--earth-dark);
+            color: var(--parchment);
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--earth-dark);
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 0.1em;
+            transition: all 0.2s;
+            box-shadow: 3px 3px 0px var(--clay);
+        }
+        .btn-earth:hover {
+            background-color: var(--clay);
+            transform: translate(1px, 1px);
+            box-shadow: 1px 1px 0px var(--earth-dark);
+        }
+        
+        .btn-sage {
+            background-color: var(--sage);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--sage);
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 0.1em;
+            transition: all 0.2s;
+            box-shadow: 3px 3px 0px var(--earth-dark);
+        }
+        .btn-sage:hover {
+            background-color: #33691E;
+            transform: translate(1px, 1px);
+            box-shadow: 1px 1px 0px var(--earth-dark);
+        }
+
+        /* Link Styling */
+        .link-ancient {
+            color: var(--earth-dark);
+            text-decoration: none;
+            border-bottom: 2px dotted var(--maize);
+            transition: border-color 0.3s;
+        }
+        .link-ancient:hover {
+            border-bottom: 2px solid var(--sage);
+            color: var(--sage);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 350px;
+            width: 100%;
+        }
+        
+        /* Table Styling */
+        table { width: 100%; border-collapse: collapse; }
+        th { background-color: var(--earth-mid); color: var(--parchment); padding: 12px; font-family: 'Cinzel', serif; letter-spacing: 0.05em; text-align: left; }
+        td { border-bottom: 1px solid var(--clay); padding: 10px; }
+        tr:hover { background-color: #FFF3E0; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- NAV -->
+    <nav class="bg-[#3E2723] text-[#F5F5DC] sticky top-0 z-50 border-b-4 border-[#8D6E63] shadow-lg">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="nav-logo font-bold text-2xl tracking-widest text-[#F9A825]">PARTH RAIT <span class="text-[#F5F5DC] text-xs font-normal align-middle ml-2">Economics Research</span></div>
+            <div class="hidden md:flex space-x-8 text-sm font-bold tracking-wide">
+                <a href="#market" class="hover:text-[#F9A825] transition">MARKET EQUILIBRIUM</a>
+                <a href="#profit" class="hover:text-[#F9A825] transition">PROFIT & COST</a>
+                <a href="#production" class="hover:text-[#F9A825] transition">PRODUCTION</a>
+                <a href="#infrastructure" class="hover:text-[#F9A825] transition">INFRASTRUCTURE</a>
+                <a href="#portfolio" class="hover:text-[#F9A825] transition">ARCHIVE</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="pt-24 pb-20 px-6 max-w-7xl mx-auto border-b-2 border-[#8D6E63] border-dashed mb-12">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div>
+                <span class="bg-[#558B2F] text-white px-3 py-1 text-xs font-bold uppercase tracking-widest mb-4 inline-block shadow-md">Village Economy Study</span>
+                <h1 class="text-5xl md:text-6xl font-bold text-[#3E2723] mb-6 leading-tight drop-shadow-sm">The Economic Structure of <br/><span class="italic text-[#8D6E63] border-b-4 border-[#F9A825]">Wanegaon</span></h1>
+                <p class="text-xl text-[#5D4037] mb-10 leading-relaxed italic border-l-4 border-[#F9A825] pl-6">
+                    "A study of consumer preferences, production mathematics, and the equilibrium between tradition and modernity in rural Maharashtra."
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="Econmics%20of%20rural%20india%20.pdf" target="_blank" class="btn-earth flex items-center gap-2">
+                        Download Paper <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    </a>
+                    <a href="#market" class="btn-sage">View Analysis</a>
+                </div>
+            </div>
+            
+            <!-- Quick Stats Grid -->
+            <div class="grid grid-cols-2 gap-6">
+                <div class="card-agrarian p-6 text-center bg-[#FFF8E7]">
+                    <div class="text-[#8D6E63] text-xs font-bold uppercase tracking-widest mb-2">Market Price</div>
+                    <div class="text-4xl font-serif text-[#3E2723]">₹19.00</div>
+                    <div class="text-xs text-gray-500 mt-2 italic">Equilibrium Point</div>
+                </div>
+                <div class="card-agrarian p-6 text-center bg-[#FFF8E7]">
+                    <div class="text-[#8D6E63] text-xs font-bold uppercase tracking-widest mb-2">Sugarcane Income</div>
+                    <div class="text-4xl font-serif text-[#558B2F]">₹1.15L</div>
+                    <div class="text-xs text-gray-500 mt-2 italic">Net per Acre</div>
+                </div>
+                <div class="card-agrarian p-6 text-center bg-[#FFF8E7]">
+                    <div class="text-[#8D6E63] text-xs font-bold uppercase tracking-widest mb-2">Literacy Barrier</div>
+                    <div class="text-4xl font-serif text-[#3E2723]">32%</div>
+                    <div class="text-xs text-gray-500 mt-2 italic">Cite Difficulty</div>
+                </div>
+                <div class="card-agrarian p-6 text-center bg-[#FFF8E7]">
+                    <div class="text-[#8D6E63] text-xs font-bold uppercase tracking-widest mb-2">Scheme Coverage</div>
+                    <div class="text-4xl font-serif text-[#558B2F]">98.7%</div>
+                    <div class="text-xs text-gray-500 mt-2 italic">PM-KISAN</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- SECTION 1: MARKET EQUILIBRIUM (MATHS) -->
+    <section id="market" class="py-20 bg-[#ECE0D1]">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="mb-12">
+                <h2 class="text-4xl text-[#3E2723] mb-2 border-l-8 border-[#558B2F] pl-4">The Mathematics of the Mandi</h2>
+                <p class="text-[#5D4037] italic mt-2 ml-6">Modeling price sensitivity vs supply constraints using linear equations.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                <!-- Math Card -->
+                <div class="card-agrarian p-8 bg-[#F5F5DC]">
+                    <h3 class="font-bold text-[#3E2723] text-xl mb-6 border-b-2 border-[#8D6E63] pb-2 font-serif">Market Functions</h3>
+                    <div class="space-y-8 font-serif">
+                        <div>
+                            <p class="text-xs font-bold text-[#8D6E63] uppercase mb-1">Aggregated Demand Function</p>
+                            <p class="text-2xl text-[#3E2723] bg-white p-2 border border-[#8D6E63]">$$Q_d = 400 - 15P$$</p>
+                            <p class="text-xs text-[#5D4037] mt-1 italic">Slope (-15) indicates high price sensitivity.</p>
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-[#8D6E63] uppercase mb-1">Aggregated Supply Function</p>
+                            <p class="text-2xl text-[#3E2723] bg-white p-2 border border-[#8D6E63]">$$Q_s = 20 + 5P$$</p>
+                            <p class="text-xs text-[#5D4037] mt-1 italic">Base supply 20, increases with price.</p>
+                        </div>
+                        <div class="pt-4 border-t-2 border-dashed border-[#8D6E63]">
+                            <p class="text-xs font-bold text-[#8D6E63] uppercase mb-1">Equilibrium Calculation ($$Q_d = Q_s$$)</p>
+                            <div class="bg-[#E8F5E9] p-3 border border-[#558B2F]">
+                                <p class="text-lg text-[#2E7D32]">$$400 - 15P = 20 + 5P$$</p>
+                                <p class="text-lg text-[#2E7D32] font-bold mt-2">$$P^* = 19$$ <span class="text-gray-400 mx-2">|</span> $$Q^* = 115$$</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Graphs -->
+                <div class="lg:col-span-2 space-y-8">
+                    <!-- Graph 1: Equilibrium -->
+                    <div class="card-agrarian p-6 bg-white">
+                        <h4 class="text-[#3E2723] font-bold mb-4">Fig 1: Market Equilibrium Visualization</h4>
+                        <div class="chart-container">
+                            <canvas id="equilibriumChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <!-- Graph 2: Perishable vs Non-Perishable Demand -->
+                    <div class="card-agrarian p-6 bg-white">
+                        <h4 class="text-[#3E2723] font-bold mb-4">Fig 2: Perishable vs Non-Perishable Demand</h4>
+                        <div class="chart-container">
+                            <canvas id="perishableChart"></canvas>
+                        </div>
+                        <p class="text-xs text-[#5D4037] mt-4 italic">Perishable goods (Red line) show steeper demand drop as prices rise compared to non-perishables (Blue line).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: PROFIT & COST (Data Tables 1 & 2) -->
+    <section id="profit" class="py-20 bg-[#F5F5DC] border-t-4 border-[#8D6E63]">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl text-[#3E2723] mb-4">The Economy of Daily Goods</h2>
+                <div class="w-24 h-1 bg-[#F9A825] mx-auto"></div>
+                <p class="text-[#5D4037] italic mt-4">Analyzing margins for Wanegaon's basket of goods (Source: Table 2)</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                <!-- Graph 3: Profit Margins -->
+                <div class="card-agrarian p-6 bg-white">
+                    <h4 class="text-[#3E2723] font-bold mb-4">Fig 3: Purchasing vs Selling Price (Dumbbell Chart Logic)</h4>
+                    <div class="chart-container">
+                        <canvas id="priceGapChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Graph 4: Profit Percentage -->
+                <div class="card-agrarian p-6 bg-white">
+                    <h4 class="text-[#3E2723] font-bold mb-4">Fig 4: Profit Margin Percentage</h4>
+                    <div class="chart-container">
+                        <canvas id="marginChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: PRODUCTION ECONOMICS (Sugarcane & Soybean) -->
+    <section id="production" class="py-20 bg-[#EFEBE9]">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="mb-12">
+                <h2 class="text-4xl text-[#3E2723] mb-2 border-l-8 border-[#F9A825] pl-4">Production Economics</h2>
+                <p class="text-[#5D4037] italic mt-2 ml-6">Input costs vs Returns for major crops.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                
+                <!-- Graph 5: Sugarcane Cost Curves -->
+                <div class="card-agrarian p-6 bg-white">
+                    <h4 class="text-[#3E2723] font-bold mb-4">Fig 5: Sugarcane Cost Curves</h4>
+                    <div class="chart-container">
+                        <canvas id="sugarcaneCostChart"></canvas>
+                    </div>
+                    <div class="mt-4 p-4 bg-[#F1F8E9] border border-[#558B2F]">
+                        <p class="text-sm text-[#33691E]"><strong>Sugarcane Insight:</strong> Total Cost (TC) increases non-linearly. Break-even achieved at approx 10 tonnes/acre. Max profit at 40 tonnes/acre yield.</p>
+                    </div>
+                </div>
+
+                <!-- Graph 6: Soybean Cost Curves -->
+                <div class="card-agrarian p-6 bg-white">
+                    <h4 class="text-[#3E2723] font-bold mb-4">Fig 6: Soybean Economic Cost Curves</h4>
+                    <div class="chart-container">
+                        <canvas id="soybeanCostChart"></canvas>
+                    </div>
+                    <div class="mt-4 p-4 bg-[#FFF3E0] border border-[#F9A825]">
+                        <p class="text-sm text-[#E65100]"><strong>Soybean Insight:</strong> High initial fixed costs. Variable costs rise sharply after 12.5 quintals/ha due to intensive management requirements.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Financial Breakdown Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
+                <!-- Sugarcane Data -->
+                <div class="card-agrarian p-8 bg-white border-l-8 border-[#558B2F]">
+                    <div class="flex justify-between items-start mb-6">
+                        <h3 class="text-2xl font-serif text-[#3E2723]">Sugarcane</h3>
+                        <span class="bg-[#558B2F] text-white text-xs px-3 py-1 uppercase font-bold">Cash Crop</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-y-4 text-sm mb-6 font-serif">
+                        <div class="text-[#8D6E63]">Cost per Acre</div>
+                        <div class="text-right font-bold text-[#3E2723]">₹28,500</div>
+                        <div class="text-[#8D6E63]">Yield</div>
+                        <div class="text-right font-bold text-[#3E2723]">40 MT</div>
+                        <div class="text-[#8D6E63]">MSP</div>
+                        <div class="text-right font-bold text-[#3E2723]">₹360/q</div>
+                        <div class="text-[#558B2F] font-bold pt-2 border-t border-dashed border-[#8D6E63]">Net Income</div>
+                        <div class="text-right text-[#558B2F] font-bold text-xl pt-2 border-t border-dashed border-[#8D6E63]">₹1,15,500</div>
+                    </div>
+                </div>
+
+                <!-- Soybean Data -->
+                <div class="card-agrarian p-8 bg-white border-l-8 border-[#F9A825]">
+                    <div class="flex justify-between items-start mb-6">
+                        <h3 class="text-2xl font-serif text-[#3E2723]">Soybean</h3>
+                        <span class="bg-[#F9A825] text-[#3E2723] text-xs px-3 py-1 uppercase font-bold">Oilseed</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-y-4 text-sm mb-6 font-serif">
+                        <div class="text-[#8D6E63]">Cost per Hectare</div>
+                        <div class="text-right font-bold text-[#3E2723]">₹35,262</div>
+                        <div class="text-[#8D6E63]">Yield</div>
+                        <div class="text-right font-bold text-[#3E2723]">14.4 q</div>
+                        <div class="text-[#8D6E63]">MSP</div>
+                        <div class="text-right font-bold text-[#3E2723]">₹4,600/q</div>
+                        <div class="text-[#F9A825] font-bold pt-2 border-t border-dashed border-[#8D6E63]">Net Income</div>
+                        <div class="text-right text-[#F9A825] font-bold text-xl pt-2 border-t border-dashed border-[#8D6E63]">₹30,978</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: INFRASTRUCTURE & SCHEMES -->
+    <section id="infrastructure" class="py-20 bg-[#F5F5DC] border-t-4 border-[#3E2723]">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl text-[#3E2723] mb-4">Infrastructural & Policy Reach</h2>
+                <div class="w-24 h-1 bg-[#8D6E63] mx-auto"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                <!-- Graph 7: Scheme Coverage -->
+                <div class="card-agrarian p-6 bg-white">
+                    <h4 class="text-[#3E2723] font-bold mb-4">Fig 7: Government Scheme Coverage vs Satisfaction</h4>
+                    <div class="chart-container">
+                        <canvas id="schemesChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Infrastructure Table -->
+                <div class="card-agrarian p-6 bg-white">
+                    <h4 class="text-[#3E2723] font-bold mb-4">Evolution of Utilities (1981-2020)</h4>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left font-serif">
+                            <thead class="bg-[#3E2723] text-[#F5F5DC]">
+                                <tr>
+                                    <th class="px-4 py-3">Sector</th>
+                                    <th class="px-4 py-3">1981</th>
+                                    <th class="px-4 py-3">2020</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-[#8D6E63]">
+                                    <td class="px-4 py-3 font-bold text-[#8D6E63]">Water</td>
+                                    <td class="px-4 py-3">Wells</td>
+                                    <td class="px-4 py-3 text-[#558B2F] font-bold">100% Tap Supply</td>
+                                </tr>
+                                <tr class="border-b border-[#8D6E63]">
+                                    <td class="px-4 py-3 font-bold text-[#8D6E63]">Electricity</td>
+                                    <td class="px-4 py-3">Limited</td>
+                                    <td class="px-4 py-3 text-[#558B2F] font-bold">100% Grid (8hr Farm)</td>
+                                </tr>
+                                <tr class="border-b border-[#8D6E63]">
+                                    <td class="px-4 py-3 font-bold text-[#8D6E63]">Transport</td>
+                                    <td class="px-4 py-3">Kaccha Road</td>
+                                    <td class="px-4 py-3 text-[#558B2F] font-bold">Pakka Road</td>
+                                </tr>
+                                <tr class="border-b border-[#8D6E63]">
+                                    <td class="px-4 py-3 font-bold text-[#8D6E63]">Banking</td>
+                                    <td class="px-4 py-3">None</td>
+                                    <td class="px-4 py-3 text-[#558B2F] font-bold">Co-op Bank (0km)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: RESEARCH ARCHIVE (LINKS) -->
+    <section id="portfolio" class="py-24 bg-[#3E2723] text-[#F5F5DC]">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 border-b border-[#8D6E63] pb-8">
+                <div>
+                    <h2 class="text-4xl font-serif mb-2">Research Archive</h2>
+                    <p class="text-[#F9A825] text-sm tracking-wide">Access the complete library of economic studies.</p>
+                </div>
+                <!-- LINK TO BANKING SITE -->
+                <a href="https://parth-rait.github.io/Banking-and-Finance-A-Psychometric-Analysis-of-Banking-in-India/" target="_blank" class="btn-sage mt-4 md:mt-0 flex items-center gap-2">
+                    Visit Banking Site <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- DOC 1 -->
+                <a href="Econmics%20of%20rural%20india%20.pdf" target="_blank" class="group block bg-[#4E342E] p-8 rounded-sm hover:bg-[#5D4037] transition border border-[#8D6E63] hover:border-[#F9A825] shadow-lg">
+                    <div class="flex justify-between items-start mb-6">
+                        <span class="text-[10px] uppercase tracking-widest text-[#F9A825] border border-[#F9A825] px-2 py-1">Economics</span>
+                        <svg class="w-6 h-6 text-[#F9A825] group-hover:text-white transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-serif mb-3 group-hover:text-[#F9A825] transition text-white">Economics of Rural India</h3>
+                    <p class="text-sm text-[#D7CCC8] font-light leading-relaxed">Macro survey of Wanegaon economy, market structures, and consumption patterns.</p>
+                </a>
+
+                <!-- DOC 2 -->
+                <a href="Banking%20and%20finance%20-%20r1.pdf" target="_blank" class="group block bg-[#4E342E] p-8 rounded-sm hover:bg-[#5D4037] transition border border-[#8D6E63] hover:border-[#F9A825] shadow-lg">
+                    <div class="flex justify-between items-start mb-6">
+                        <span class="text-[10px] uppercase tracking-widest text-[#F9A825] border border-[#F9A825] px-2 py-1">Finance</span>
+                        <svg class="w-6 h-6 text-[#F9A825] group-hover:text-white transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-serif mb-3 group-hover:text-[#F9A825] transition text-white">Banking & Finance Analysis</h3>
+                    <p class="text-sm text-[#D7CCC8] font-light leading-relaxed">Psychometric study of financial inclusion, risk behavior, and institutional trust.</p>
+                </a>
+
+                <!-- DOC 3 (Placeholder) -->
+                <div class="block bg-[#4E342E]/50 p-8 rounded-sm border border-[#5D4037] opacity-60 cursor-not-allowed">
+                    <div class="flex justify-between items-start mb-6">
+                        <span class="text-[10px] uppercase tracking-widest text-gray-500 border border-gray-500 px-2 py-1">Field Data</span>
+                    </div>
+                    <h3 class="text-2xl font-serif mb-3 text-gray-400">Wanegaon Field Report</h3>
+                    <p class="text-sm text-gray-500 font-light leading-relaxed">Large dataset. Available upon request.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-[#2D1B18] py-12 text-center text-[#8D6E63] text-xs border-t border-[#5D4037]">
+        <p class="font-serif tracking-widest">© 2025 Parth Rait Research. All Rights Reserved.</p>
+    </footer>
+
+    <!-- CHART LOGIC -->
+    <script>
+        // GLOBAL CHART DEFAULTS
+        Chart.defaults.font.family = "'Lora', serif";
+        Chart.defaults.color = '#5D4037';
+        Chart.defaults.borderColor = '#D7CCC8';
+
+        // 1. EQUILIBRIUM
+        const ctxEq = document.getElementById('equilibriumChart').getContext('2d');
+        new Chart(ctxEq, {
+            type: 'line',
+            data: {
+                labels: [0, 5, 10, 15, 19, 25, 30],
+                datasets: [
+                    { label: 'Demand', data: [400, 325, 250, 175, 115, 25, -50], borderColor: '#558B2F', borderWidth: 3, pointBackgroundColor: '#558B2F', tension: 0 },
+                    { label: 'Supply', data: [20, 45, 70, 95, 115, 145, 170], borderColor: '#8D6E63', borderWidth: 3, pointBackgroundColor: '#8D6E63', tension: 0 }
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { position: 'bottom' }, title: { display: true, text: 'Equilibrium at Price=19, Qty=115' } },
+                scales: { x: { title: { display: true, text: 'Price (₹)' } }, y: { title: { display: true, text: 'Quantity' } } }
+            }
+        });
+
+        // 2. PERISHABLE VS NON-PERISHABLE
+        const ctxPerish = document.getElementById('perishableChart').getContext('2d');
+        new Chart(ctxPerish, {
+            type: 'line',
+            data: {
+                labels: [0, 10, 20, 30, 40],
+                datasets: [
+                    { label: 'Perishable (Curd/Milk)', data: [250, 150, 50, -50, -150], borderColor: '#C62828', borderWidth: 2 },
+                    { label: 'Non-Perishable (Grains)', data: [300, 220, 140, 60, -20], borderColor: '#1565C0', borderWidth: 2 }
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { position: 'bottom' } },
+                scales: { x: { title: { display: true, text: 'Price (₹)' } }, y: { title: { display: true, text: 'Qty Demanded' } } }
+            }
+        });
+
+        // 3. PRICE GAP (DUMBBELL STYLE) - BAR
+        const ctxGap = document.getElementById('priceGapChart').getContext('2d');
+        new Chart(ctxGap, {
+            type: 'bar',
+            data: {
+                labels: ['Peanuts', 'Curd', 'Chips', 'Petrol', 'Noodles'],
+                datasets: [
+                    { label: 'Selling Price', data: [10, 20, 5, 120, 12], backgroundColor: '#558B2F' },
+                    { label: 'Purchasing Cost', data: [8, 17, 3, 110, 10], backgroundColor: '#8D6E63' }
+                ]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+        });
+
+        // 4. MARGIN %
+        const ctxMargin = document.getElementById('marginChart').getContext('2d');
+        new Chart(ctxMargin, {
+            type: 'bar',
+            data: {
+                labels: ['Coffee', 'Ice Cream', 'Chips V1', 'Ponds', 'Petrol', 'Pads'],
+                datasets: [{ label: 'Profit Margin %', data: [50, 40, 40, 33.3, 8.3, 5.7], backgroundColor: '#F9A825' }]
+            },
+            options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false }
+        });
+
+        // 5. SUGARCANE COST CURVE (Simulated Quadratic)
+        const ctxSugar = document.getElementById('sugarcaneCostChart').getContext('2d');
+        new Chart(ctxSugar, {
+            type: 'line',
+            data: {
+                labels: [10, 20, 30, 40, 50, 60],
+                datasets: [
+                    { label: 'Total Cost (TC)', data: [5000, 9000, 16000, 28500, 45000, 65000], borderColor: '#C62828', fill: false },
+                    { label: 'Variable Cost', data: [2000, 6000, 13000, 25500, 42000, 62000], borderColor: '#1565C0', fill: false }
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                scales: { x: { title: { display: true, text: 'Output (Tonnes)' } }, y: { title: { display: true, text: 'Cost (₹)' } } }
+            }
+        });
+
+        // 6. SOYBEAN COST CURVE
+        const ctxSoy = document.getElementById('soybeanCostChart').getContext('2d');
+        new Chart(ctxSoy, {
+            type: 'line',
+            data: {
+                labels: [2.5, 5, 7.5, 10, 12.5, 15],
+                datasets: [
+                    { label: 'Total Cost', data: [12000, 14000, 18000, 24000, 32000, 42000], borderColor: '#C62828' },
+                    { label: 'Avg Cost', data: [4800, 2800, 2400, 2400, 2560, 2800], borderColor: '#2E7D32', borderDash: [5, 5] }
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                scales: { x: { title: { display: true, text: 'Quintals/Ha' } }, y: { title: { display: true, text: 'Cost (₹)' } } }
+            }
+        });
+
+        // 7. SCHEMES
+        const ctxScheme = document.getElementById('schemesChart').getContext('2d');
+        new Chart(ctxScheme, {
+            type: 'bar',
+            data: {
+                labels: ['PM-KISAN', 'Mid-Day Meal', 'KCC', 'Loan Waiver', 'Housing'],
+                datasets: [
+                    { label: 'Coverage %', data: [98.7, 100, 70.5, 50, 100], backgroundColor: '#558B2F' },
+                    { label: 'Satisfaction %', data: [78.7, 98.4, 83.9, 100, 100], backgroundColor: '#F9A825' }
+                ]
+            },
+            options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, max: 100 } } }
+        });
+    </script>
+</body>
+</html>
